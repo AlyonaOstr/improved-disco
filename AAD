@@ -1,0 +1,102 @@
+#include <iostream>
+#include <math.h>
+#include <cstdlib>
+#include <conio.h>
+
+using namespace std;
+
+int main()
+{
+    int* arr = new int[200];
+    setlocale(LC_ALL, "Russian");
+    int size = 0;
+    cout << "Введите размер массива = ";
+    cin >> size;
+    int* mas = new int[size];
+    for (int i = 0; i < size; i++) {
+        mas[i] = rand() % 100 - 20;
+        cout << mas[i] << ' ';
+    }
+    cout << endl;
+    cout << "Удаление всех четных элементов: " << endl;
+    int* mas2 = new int[100];
+    for (int i = 0; i < size; i++) {
+        if (mas[i] % 2) {
+            mas2[i] = mas[i];
+            cout << mas2[i] << ' ';
+        }
+    }
+    cout << endl;
+    int k = 0;
+    cout << "Введите k = ";
+    cin >> k;
+    int* masK = new int[k];
+    for (int i = 0; i < k; i++) {
+        masK[i] = rand() % 100 - 30;
+        cout << masK[i] << ' ';
+    }
+    int n = 0;
+    n = size + k;
+    for (int i = 0; i < size; i++) {
+        arr[i] = masK[i];           //Записали второй массив в начало
+    }
+    for (int i = k; i < n; i++) {
+        arr[i] = mas[i - k];
+        cout << arr[i] << " ";   //Записали первый массив во вторую часть(в конец)
+    }
+    cout << endl;
+   
+    int  j, temp;
+    for (int i = 0, j = n - 1; i < j;) {//Перестановка четных в начало, нечетных в конец
+        if (arr[i] % 2 != 0 && arr[j] % 2 == 0) {
+            temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+        if (arr[i] % 2 == 0) i += 1;
+        if (arr[j] % 2 != 0) j -= 1;
+    }
+    cout << "Четные элементы в начало, нечетные в конец: "<<endl;
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << ' ';
+    }
+    cout << endl;
+
+    for (int i = 0; i < n; i++) {
+        if (arr[i] % 2 == 0) {
+            cout << "Первый четный элемент в массиве: ";
+            cout << arr[i] << endl;
+            break;
+        }
+    }
+
+    int tmp;
+    for (int i = 0; i < n; ++i) // i - номер текущего шага
+    {
+        int pos = i;
+        tmp = arr[i];
+        for (int j = i + 1; j < n; ++j) // цикл выбора наименьшего элемента
+        {
+            if (arr[j] < tmp)
+            {
+                pos = j;
+                tmp = arr[j];
+            }
+        }
+        arr[pos] = arr[i];
+        arr[i] = tmp; // меняем местами наименьший с a[i]
+    }
+
+    cout << "Сортировка простым выбором: " << endl;
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << ' ';
+    }
+    cout << endl;
+
+//Очистка памяти
+    delete[] mas;
+    delete[] masK;
+    delete[] mas2;
+    delete[] arr; 
+    system("pause");
+}
